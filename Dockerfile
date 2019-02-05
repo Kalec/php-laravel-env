@@ -1,27 +1,31 @@
-FROM php:7.2-apache-stretch
+FROM php:7.3-apache-stretch
 
 LABEL maintainer="Kalegos"
 
 #Install PHP Extensions
 RUN docker-php-ext-install pdo_mysql opcache \
-	&& pecl install xdebug-2.6.1 \
+	&& pecl install xdebug-2.7.0RC1 \
 	&& docker-php-ext-enable xdebug \
 	&& a2enmod rewrite negotiation
 
 #Install composer
-COPY /composer/composer-installer.sh /usr/local/bin/composer-installer
+COPY docker/composer/composer-installer.sh /usr/local/bin/composer-installer
 RUN apt-get -yqq update \
-	&& apt-get -yqq install --no-install-recommends zip unzip git node npm \
+	&& apt-get -yqq install --no-install-recommends zip unzip git gnupg \
 	&& chmod +x /usr/local/bin/composer-installer \
 	&& composer-installer \
 	&& mv composer.phar /usr/local/bin/composer \
 	&& chmod +x /usr/local/bin/composer \
 	&& rm /usr/local/bin/composer-installer \
 	&& composer --version
+	
+#Install NodeJs
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+	&& apt-get install -yqq nodejs npm yarn
 
-COPY /php/php.ini /usr/local/etc/php/
-COPY /apache/vhost.conf /etc/apache2/sites-available/000-default.conf
-COPY /php/xdebug-dev.ini /usr/local/etc/php/conf.d/xdebug-dev.ini
+COPY docker/php/php.ini /usr/local/etc/php/
+COPY docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/php/xdebug-dev.ini /usr/local/etc/php/conf.d/xdebug-dev.ini
 
 # Cache Composer dependencies
 WORKDIR /tmp
@@ -36,3 +40,4 @@ RUN mkdir -p database/seeds \
 	--prefer-dist \
 	&& rm -rf composer.json composer.lock \
 	database/ vendor/
+
