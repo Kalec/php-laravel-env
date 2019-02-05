@@ -11,7 +11,7 @@ RUN docker-php-ext-install pdo_mysql opcache \
 #Install composer
 COPY /composer/composer-installer.sh /usr/local/bin/composer-installer
 RUN apt-get -yqq update \
-	&& apt-get -yqq install --no-install-recommends zip unzip git \
+	&& apt-get -yqq install --no-install-recommends zip unzip git node npm \
 	&& chmod +x /usr/local/bin/composer-installer \
 	&& composer-installer \
 	&& mv composer.phar /usr/local/bin/composer \
