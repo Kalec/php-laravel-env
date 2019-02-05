@@ -9,7 +9,7 @@ RUN docker-php-ext-install pdo_mysql opcache \
 	&& a2enmod rewrite negotiation
 
 #Install composer
-COPY docker/composer/composer-installer.sh /usr/local/bin/composer-installer
+COPY /composer/composer-installer.sh /usr/local/bin/composer-installer
 RUN apt-get -yqq update \
 	&& apt-get -yqq install --no-install-recommends zip unzip git gnupg \
 	&& chmod +x /usr/local/bin/composer-installer \
@@ -23,9 +23,9 @@ RUN apt-get -yqq update \
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 	&& apt-get install -yqq nodejs npm yarn
 
-COPY docker/php/php.ini /usr/local/etc/php/
-COPY docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
-COPY docker/php/xdebug-dev.ini /usr/local/etc/php/conf.d/xdebug-dev.ini
+COPY /php/php.ini /usr/local/etc/php/
+COPY /apache/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY /php/xdebug-dev.ini /usr/local/etc/php/conf.d/xdebug-dev.ini
 
 # Cache Composer dependencies
 WORKDIR /tmp
