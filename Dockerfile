@@ -19,9 +19,15 @@ RUN apt-get -yqq update \
 	&& rm /usr/local/bin/composer-installer \
 	&& composer --version
 	
-#Install NodeJs
+#Install NodeJs & Gulp
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
-	&& apt-get install -yqq nodejs npm yarn
+	&& apt-get install -yqq nodejs npm yarn \
+	&& node --version \
+	&& npm --version
+
+RUN npm install --global gulp-cli -g \
+	&& npm install --global gulp -D \
+	&& gulp --help
 
 COPY /php/php.ini /usr/local/etc/php/
 COPY /apache/vhost.conf /etc/apache2/sites-available/000-default.conf
