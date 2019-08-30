@@ -1,10 +1,10 @@
-FROM php:7.3.3-apache-stretch
+FROM php:7.3.8-apache-stretch
 
 LABEL maintainer="Kalegos"
 
 #Install PHP Extensions
 RUN docker-php-ext-install pdo_mysql opcache \
-	&& pecl install xdebug-2.7.0 \
+	&& pecl install xdebug-2.7.2 \
 	&& docker-php-ext-enable xdebug \
 	&& a2enmod rewrite negotiation
 
