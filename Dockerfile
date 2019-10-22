@@ -45,6 +45,10 @@ RUN mkdir -p database/seeds \
 	--no-scripts \
 	--prefer-dist \
 	&& composer update \
+	--no-interaction \
+	--no-plugins \
+	--no-scripts \
+	--prefer-dist \
 	&& rm -rf composer.json composer.lock \
 	database/ vendor/
 
