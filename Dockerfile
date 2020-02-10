@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:7.3-apache-stretch
 
 LABEL maintainer="Kalegos"
 
@@ -20,7 +20,7 @@ RUN apt-get -yqq update \
 	&& composer --version
 	
 #Install NodeJs & Gulp
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
 	&& apt-get install -yqq nodejs npm yarn \
 	&& node --version \
 	&& npm --version
