@@ -1,4 +1,4 @@
-FROM php:7.3.8-apache-stretch
+FROM php:apache
 
 LABEL maintainer="Kalegos"
 
@@ -35,7 +35,8 @@ COPY /php/xdebug-dev.ini /usr/local/etc/php/conf.d/xdebug-dev.ini
 
 # Cache Composer dependencies
 WORKDIR /tmp
-ADD composer.json composer.lock /tmp/
+RUN curl -OL https://raw.githubusercontent.com/laravel/laravel/master/composer.json
+# ADD composer.json composer.lock /tmp/
 
 RUN mkdir -p database/seeds \
 	mkdir -p database/factories \
