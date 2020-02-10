@@ -4,7 +4,7 @@ LABEL maintainer="Kalegos"
 
 #Install PHP Extensions
 RUN docker-php-ext-install pdo_mysql opcache \
-	&& pecl install xdebug-2.7.2 \
+	&& pecl install xdebug \
 	&& docker-php-ext-enable xdebug \
 	&& a2enmod rewrite negotiation
 
